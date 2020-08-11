@@ -1,0 +1,14 @@
+[
+	{
+		"_id": 1,
+		"categoryName": "Breakfast"
+	},
+	{
+		"_id": 2,
+		"categoryName": "Eggs"
+	},
+	{
+		"_id": 3,
+		"categoryName": "Dairy"
+	}
+]
