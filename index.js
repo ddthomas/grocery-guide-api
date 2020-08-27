@@ -34,7 +34,7 @@ app.get("/categories", (req, res) => {
 
 app.get("/categories/new", (req, res) => {
 	const dairy = new Category({ categoryName: 'Dairy' });
-	console.log(dairy.name);
+	console.log(dairy.categoryName);
 	dairy.save(function (err) {
 		if (err) return console.error(err);
 		res.json(dairy);
@@ -46,13 +46,20 @@ app.get("/educontent/new", (req, res) => {
 	const contentOne = new EduContent({ 
 		class: "Grocery",
         question: "Which oatmeal is the healthiest?",
-        categoryID: dairy._id,
+        categoryId: "d5f4447efbfe9c60fb2218c17",
         subcategory: "cereal",
         tags: ["breakfast", "oatmeal", "oats", "steel cut", "rolled", "instant"],
         text: "Typically the best oatmeal is steel cut because of its higher fiber content by virtue of being less processed."
 	});
 	contentOne.save(function (err) {
 		if (err) return console.log(err);
+		// Category.
+		// 	findById(contentOne.categoryId).
+		// 	populate('categoryName').
+		// 	exec(function (err, story) {
+		// 		if (err) return handleError(err);
+		// 		console.log('The category is', category.categoryName);
+		// 	});
 		res.json(contentOne);
 	});
 });
