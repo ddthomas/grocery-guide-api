@@ -8,6 +8,7 @@ const cors = require("cors");
 const db = require("./libs/conection");
 const Category = require("./models/category");
 const categories = require("./categories.json");
+const EduContent = require('./models/eduContent');
 
 const port = 3000;
 const app = express();
@@ -41,6 +42,20 @@ app.get("/categories/new", (req, res) => {
 	
 });
 
+app.get("/educontent/new", (req, res) => {
+	const contentOne = new EduContent({ 
+		class: "Grocery",
+        question: "Which oatmeal is the healthiest?",
+        categoryID: dairy._id,
+        subcategory: "cereal",
+        tags: ["breakfast", "oatmeal", "oats", "steel cut", "rolled", "instant"],
+        text: "Typically the best oatmeal is steel cut because of its higher fiber content by virtue of being less processed."
+	});
+	contentOne.save(function (err) {
+		if (err) return console.log(err);
+		res.json(contentOne);
+	});
+});
 
 
 app.get("/test/:number", (req, res) => {
