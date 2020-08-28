@@ -9,6 +9,7 @@ const db = require("./libs/conection");
 const Category = require("./models/category");
 const categories = require("./categories.json");
 const EduContent = require('./models/eduContent');
+const mongoose = require('mongoose');
 
 const port = 3000;
 const app = express();
@@ -29,39 +30,67 @@ app.get("/", (req, res) => {
 });
 
 app.get("/categories", (req, res) => {
-	res.json(categories);
+	Category.find(function(err, categories){
+		if (err) return console.log(err);
+		res.json(categories);
+ 	});
 });
 
-app.get("/categories/new", (req, res) => {
+
+
+app.post("/categories/new", (req, res) => {
 	const dairy = new Category({ categoryName: 'Dairy' });
 	console.log(dairy.categoryName);
 	dairy.save(function (err) {
 		if (err) return console.error(err);
 		res.json(dairy);
 	  });	
-	
+	console.log("POST ROUTE");
+
 });
 
-app.get("/educontent/new", (req, res) => {
-	const contentOne = new EduContent({ 
-		class: "Grocery",
-        question: "Which oatmeal is the healthiest?",
-        categoryId: "d5f4447efbfe9c60fb2218c17",
-        subcategory: "cereal",
-        tags: ["breakfast", "oatmeal", "oats", "steel cut", "rolled", "instant"],
-        text: "Typically the best oatmeal is steel cut because of its higher fiber content by virtue of being less processed."
-	});
-	contentOne.save(function (err) {
+app.put("/categories/:id", (req, res) => {
+
+	res.send(200);
+	console.log("PUT ROUTE");
+
+});
+
+app.delete("/categories/:id", (req, res) => {
+
+	res.send(200);
+	console.log("DELETE ROUTE");
+
+});
+
+app.get("/categories/:id", (req, res) => {
+	console.log("GET ROUTE");
+	const categoryId = req.params.id;
+	Category.findById(categoryId, function(err, categories){
 		if (err) return console.log(err);
-		// Category.
-		// 	findById(contentOne.categoryId).
-		// 	populate('categoryName').
-		// 	exec(function (err, story) {
-		// 		if (err) return handleError(err);
-		// 		console.log('The category is', category.categoryName);
-		// 	});
-		res.json(contentOne);
-	});
+		res.json(categories);
+ 	});
+});
+
+app.post("/educontent/new", (req, res) => {
+	const categoryId = req.body.category;
+	const question = req.body.question;
+	Category.findById(categoryId, function(err, category){
+		if (err) return console.log(err);
+		
+		const contentOne = new EduContent({ 
+			class: "Grocery",
+			question: question,
+			category: category,
+			subcategory: "cereal",
+			tags: ["breakfast", "oatmeal", "oats", "steel cut", "rolled", "instant"],
+			text: "Typically the best oatmeal is steel cut because of its higher fiber content by virtue of being less processed."
+		});
+		contentOne.save(function (err) {
+			if (err) return console.log(err);
+			res.json(contentOne);
+		});
+ 	});
 });
 
 
