@@ -72,6 +72,9 @@ app.get("/categories/:id", (req, res) => {
  	});
 });
 
+
+
+
 app.post("/educontent/new", (req, res) => {
 	const categoryId = req.body.category;
 	const question = req.body.question;
@@ -93,6 +96,28 @@ app.post("/educontent/new", (req, res) => {
  	});
 });
 
+app.put("/educontent/:id", (req, res) => {
+
+	res.send(200);
+	console.log("PUT ROUTE");
+
+});
+
+app.delete("/educontent/:id", (req, res) => {
+
+	res.send(200);
+	console.log("DELETE ROUTE");
+
+});
+
+app.get("/educontent/:id", (req, res) => {
+	console.log("GET ROUTE");
+	const eduContentId = req.params.id;
+	EduContent.findById(eduContentId, function(err, eduContent){
+		if (err) return console.log(err);
+		res.json(eduContent);
+ 	});
+});
 
 app.get("/test/:number", (req, res) => {
 	res.send("My number is: " + req.param("number"));
