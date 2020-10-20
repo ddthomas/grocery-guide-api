@@ -11,7 +11,10 @@ const categories = require("./categories.json");
 const EduContent = require('./models/eduContent');
 const mongoose = require('mongoose');
 
-const port = 3000;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 const app = express();
 
 app.use(helmet());
