@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 	});
 
 app.get("/", (req, res) => {
-	res.json({david:"awesome"});
+	res.json({david:"test"});
 });
 
 app.get("/categories", (req, res) => {
